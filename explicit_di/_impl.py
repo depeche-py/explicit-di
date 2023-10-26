@@ -1,6 +1,6 @@
 # from https://github.com/PatrickKalkman/python-di/blob/master/custom_di/container.py
 import inspect
-from typing import Type, TypeVar, Callable
+from typing import Callable, Type, TypeVar
 
 
 class NotRegisteredError(Exception):
@@ -48,7 +48,7 @@ class Container:
 
         return implementation(*dependencies)  # type: ignore
 
-    def inject(self, fn : Callable, **kwargs):
+    def inject(self, fn: Callable, **kwargs):
         return Injector(self).inject(fn, **kwargs)
 
 
