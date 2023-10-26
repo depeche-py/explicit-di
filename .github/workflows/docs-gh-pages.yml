@@ -1,0 +1,34 @@
+name: 'Deploy docs'
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "docs/**/*"
+      - ".github/workflows/docs-gh-pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  deploy-docs:
+    name: Deploy docs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install graphviz
+        run: sudo apt-get install -y graphviz
+      - uses: actions/checkout@v3
+        with:
+          ref: gh-pages
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v3
+        with:
+          python-version: '3.10'
+      - name: Install
+        run: |
+          pipx install poetry
+          poetry install --with dev,docs
+      - name: Deploy docs
+        run: poetry run mkdocs gh-deploy

@@ -1,0 +1,56 @@
+strict: true
+site_name: Explicit DI
+repo_name: depeche-py/explicit-di
+repo_url: https://github.com/depeche-py/explicit-di
+copyright: Copyright &copy; 2023 Martin Vielsmaier
+extra:
+  generator: false
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/depeche-py/explicit-di
+    - icon: fontawesome/brands/python
+      link: https://pypi.org/project/explicit-id
+nav:
+  - Home: index.md
+  - Changelog: CHANGELOG.md
+plugins:
+  - mermaid2:
+      version: 9.3.0
+  - search
+  - diagrams
+  - alias
+  - macros
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          options:
+            show_docstring_attributes: true
+            show_root_heading: true
+            show_source: false
+            docstring_options:
+              ignore_init_summary: false
+            merge_init_into_class: true
+            show_signature: true
+            show_signature_annotations: false
+theme:
+  name: material
+  icon:
+    repo: fontawesome/brands/github
+  palette:
+    primary: light green
+  features:
+    - navigation.expand
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      use_pygments: true
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      # make exceptions to highlighting of code:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:mermaid2.fence_mermaid
