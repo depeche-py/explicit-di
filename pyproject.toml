@@ -1,9 +1,22 @@
 [tool.poetry]
 name = "explicit-di"
-version = "0.1.0"
+version = "0.1.1"
 description = ""
 authors = ["Martin Vielsmaier <martin@vielsmaier.net>"]
 readme = "README.md"
+homepage = "https://github.com/depeche-py/explicit-di"
+repository = "https://github.com/depeche-py/explicit-di"
+documentation = "https://depeche-py.github.io/explicit-di/"
+keywords = ["dependency-injection", "di", "dependency-injection-container"]
+classifiers = [
+"Development Status :: 3 - Alpha",
+"Intended Audience :: Developers",
+"License :: OSI Approved :: MIT License",
+"Topic :: Software Development :: Libraries",
+]
+
+[tool.poetry.urls]
+Changelog = "https://depeche-py.github.io/explicit-di/CHANGELOG/"
 
 [tool.poetry.dependencies]
 python = "^3.9"
