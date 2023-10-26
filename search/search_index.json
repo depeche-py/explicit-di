@@ -1,0 +1,1 @@
+{"config":{"lang":["en"],"separator":"[\\s\\-]+","pipeline":["stopWordFilter"]},"docs":[{"location":"CHANGELOG/","title":"Changelog","text":""},{"location":"CHANGELOG/#010","title":"0.1.0","text":"<p>Initial release</p>"}]}
