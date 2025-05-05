@@ -1,1 +1,3 @@
-from ._impl import Container  # noqa: F401
+from ._impl import Container, NotRegisteredError
+
+__all__ = ["Container", "NotRegisteredError"]
