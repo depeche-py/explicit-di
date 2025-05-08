@@ -1,4 +1,7 @@
+import sys
 from typing import Optional
+
+import pytest
 
 import explicit_di as _di
 
@@ -33,12 +36,14 @@ def test_resolve():
     assert isinstance(c.b.a, A)
 
 
-class WithNoneUnion:
-    def __init__(self, a: A | None):
-        self.a = a
-
-
+@pytest.mark.skipif(
+    sys.version_info < (3, 10), reason="Python 3.10+ required for Union type hinting"
+)
 def test_resolve_none_union():
+    class WithNoneUnion:
+        def __init__(self, a: A | None):
+            self.a = a
+
     container = _di.Container()
     container.register(A)
     container.register(WithNoneUnion)
