@@ -1,5 +1,5 @@
 import sys
-from typing import Optional
+from typing import Optional, Union
 
 import pytest
 
@@ -39,9 +39,22 @@ def test_resolve():
 @pytest.mark.skipif(
     sys.version_info < (3, 10), reason="Python 3.10+ required for Union type hinting"
 )
-def test_resolve_none_union():
+def test_resolve_none_union_py310():
     class WithNoneUnion:
         def __init__(self, a: A | None):
+            self.a = a
+
+    container = _di.Container()
+    container.register(A)
+    container.register(WithNoneUnion)
+    obj = container.resolve(WithNoneUnion)
+    assert isinstance(obj, WithNoneUnion)
+    assert isinstance(obj.a, A)
+
+
+def test_resolve_none_union():
+    class WithNoneUnion:
+        def __init__(self, a: Union[A, None]):
             self.a = a
 
     container = _di.Container()
