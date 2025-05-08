@@ -3,7 +3,7 @@ import inspect
 import sys
 import types
 import typing
-from typing import Callable, Type, TypeVar
+from typing import Any, Callable, Type, TypeVar
 
 
 class NotRegisteredError(Exception):
@@ -56,14 +56,14 @@ class Container:
         return Injector(self).inject(fn, **kwargs)
 
 
-UNION_TYPES = (typing.Union,)
+_UNION_TYPES: Any = (typing.Union,)
 if sys.version_info >= (3, 10):
-    UNION_TYPES = (typing.Union, types.UnionType)
+    _UNION_TYPES = (typing.Union, types.UnionType)
 
 
 def _resolve_optional(dependency_type):
     origin = typing.get_origin(dependency_type)
-    if origin in UNION_TYPES:
+    if origin in _UNION_TYPES:
         args = [
             type_arg
             for type_arg in typing.get_args(dependency_type)
