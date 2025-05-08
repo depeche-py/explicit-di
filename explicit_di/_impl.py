@@ -1,5 +1,6 @@
 # from https://github.com/PatrickKalkman/python-di/blob/master/custom_di/container.py
 import inspect
+import sys
 import types
 import typing
 from typing import Callable, Type, TypeVar
@@ -55,9 +56,14 @@ class Container:
         return Injector(self).inject(fn, **kwargs)
 
 
+UNION_TYPES = (typing.Union,)
+if sys.version_info >= (3, 10):
+    UNION_TYPES = (typing.Union, types.UnionType)
+
+
 def _resolve_optional(dependency_type):
     origin = typing.get_origin(dependency_type)
-    if origin in (typing.Union, types.UnionType):
+    if origin in UNION_TYPES:
         args = [
             type_arg
             for type_arg in typing.get_args(dependency_type)
