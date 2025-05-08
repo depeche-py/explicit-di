@@ -1,3 +1,5 @@
+from typing import Optional
+
 import explicit_di as _di
 
 
@@ -29,3 +31,31 @@ def test_resolve():
     assert isinstance(c, C)
     assert isinstance(c.b, B)
     assert isinstance(c.b.a, A)
+
+
+class WithNoneUnion:
+    def __init__(self, a: A | None):
+        self.a = a
+
+
+def test_resolve_none_union():
+    container = _di.Container()
+    container.register(A)
+    container.register(WithNoneUnion)
+    obj = container.resolve(WithNoneUnion)
+    assert isinstance(obj, WithNoneUnion)
+    assert isinstance(obj.a, A)
+
+
+class WithOptional:
+    def __init__(self, a: Optional[A]):
+        self.a = a
+
+
+def test_resolve_optional():
+    container = _di.Container()
+    container.register(A)
+    container.register(WithOptional)
+    obj = container.resolve(WithOptional)
+    assert isinstance(obj, WithOptional)
+    assert isinstance(obj.a, A)

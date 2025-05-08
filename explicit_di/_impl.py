@@ -1,5 +1,7 @@
 # from https://github.com/PatrickKalkman/python-di/blob/master/custom_di/container.py
 import inspect
+import types
+import typing
 from typing import Callable, Type, TypeVar
 
 
@@ -29,6 +31,7 @@ class Container:
         return dependency_type in self._registry
 
     def resolve(self, dependency_type: Type[T]) -> T:
+        dependency_type = _resolve_optional(dependency_type)
         if dependency_type not in self._registry:
             raise NotRegisteredError(f"Dependency {dependency_type} not registered")
         implementation = self._registry[dependency_type]
@@ -50,6 +53,19 @@ class Container:
 
     def inject(self, fn: Callable, **kwargs):
         return Injector(self).inject(fn, **kwargs)
+
+
+def _resolve_optional(dependency_type):
+    origin = typing.get_origin(dependency_type)
+    if origin in (typing.Union, types.UnionType):
+        args = [
+            type_arg
+            for type_arg in typing.get_args(dependency_type)
+            if type_arg is not type(None)
+        ]
+        if len(args) == 1:
+            dependency_type = args[0]
+    return dependency_type
 
 
 class Injector:
