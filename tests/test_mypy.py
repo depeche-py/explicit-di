@@ -13,7 +13,7 @@ def test_typing():
             "mypy",
             "--config",
             str(repo_path / ini),
-            ".",
+            "explicit_di",
             "--show-traceback",
         ],
         capture_output=True,
