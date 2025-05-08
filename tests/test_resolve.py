@@ -41,7 +41,7 @@ def test_resolve():
 )
 def test_resolve_none_union_py310():
     class WithNoneUnion:
-        def __init__(self, a: A | None):
+        def __init__(self, a: A | None):  # type: ignore[syntax]
             self.a = a
 
     container = _di.Container()
